@@ -1,0 +1,22 @@
+
+.professor--review--label{
+    font-size: 1.3rem;
+}
+
+.professor--child--label{
+    font-size: 1.1em;
+}
+
+
+@media not all and (min-width: 1024px) {
+
+    .professor--review--label{
+        font-size: 1rem;
+    }
+
+    .professor--child--label{
+        font-size: 1rem;
+        margin-bottom: 0.5em;
+    }
+
+}

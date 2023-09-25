@@ -1,0 +1,35 @@
+
+/* Define styles for the course card */
+.course-card {
+    background-color: #fff;
+    padding: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+}
+
+/* Define styles for the hover state */
+.course-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20); /* Add a subtle box shadow */
+}
+
+.course-tip{
+    font-size: 0.9rem;
+}
+.crypto-link-nav {
+    font-size: 1.5rem;
+    text-decoration: none; /* Remove the default underline */
+    border-bottom: 3px solid transparent; /* Add a transparent border to avoid layout shifts */
+    transition: border-color 0.2s ease, line-height 0.3s ease; /* Add a smooth transition */
+}
+
+.crypto-link-nav:hover {
+    border-color: rgb(31 41 55); /* Change the border color on hover */
+    line-height: 1.3; /* Slightly increase line height on hover */
+}
+
+@media only screen and (max-width: 1000px) {
+    .crypto-link-nav {
+        font-size: 1.3rem;
+    }
+}
+
