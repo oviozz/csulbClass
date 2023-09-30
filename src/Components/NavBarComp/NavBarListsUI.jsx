@@ -10,7 +10,7 @@ import ModalClose from '@mui/joy/ModalClose';
 import Menu from '@mui/icons-material/Menu';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import "./NavBarListsUI.css"
-import { FaRectangleList, FaMoon, FaSun } from "react-icons/fa6";
+import { FaRectangleList, FaMoon, FaSun, FaAddressCard } from "react-icons/fa6";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { Link } from 'react-router-dom'
@@ -88,17 +88,24 @@ export default function NavBarListsUI() {
                             '& > div': { justifyContent: 'flex-start' }, // Align text to the left
                         }}
                     >
+                        <Link to={"/course"}>
+                            <ListItemButton onClick={handleCloseDrawer} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start', gap: "3px" }}>
+                                <FaRectangleList fontSize={21} /> Courses
+                            </ListItemButton>
+                        </Link>
+
                         <Link to={"/"}>
                             <ListItemButton onClick={handleCloseDrawer} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start' }}>
                                 <SearchRoundedIcon /> Find Classes
                             </ListItemButton>
                         </Link>
 
-                        <Link to={"/course"}>
+                        <Link to={"/search/professor"}>
                             <ListItemButton onClick={handleCloseDrawer} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start', gap: "3px" }}>
-                                <FaRectangleList fontSize={21} /> Courses
+                                <FaAddressCard fontSize={21} /> Find Professor
                             </ListItemButton>
                         </Link>
+
 
                         <li className={"mt-2 ml-4"} onClick={toggleTheme} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start', gap: "3px" }}>
                             {
@@ -119,17 +126,25 @@ export default function NavBarListsUI() {
             )}
             {!isMobile && (
                 <ul className={"flex gap-5"}>
-                    <Link to={"/"}>
-                        <li className={"navbar--links flex items-center "}>
-                            <SearchRoundedIcon /> Find Classes
-                        </li>
-                    </Link>
 
                     <Link to={"/course"}>
                         <li className={"navbar--links gap-1 flex items-center"}>
                             <FaRectangleList fontSize={21} /> Courses
                         </li>
                     </Link>
+
+                    <Link to={"/"}>
+                        <li className={"navbar--links flex items-center "}>
+                            <SearchRoundedIcon /> Find Classes
+                        </li>
+                    </Link>
+
+                    <Link to={"/search/professor"}>
+                        <li className={"navbar--links flex gap-1.5 items-center "}>
+                            <FaAddressCard fontSize={21}/> Find Professor
+                        </li>
+                    </Link>
+
 
                     <li onClick={toggleTheme} className={"hover:cursor-pointer"}>
                         {

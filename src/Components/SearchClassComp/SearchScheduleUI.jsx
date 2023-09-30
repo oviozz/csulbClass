@@ -9,7 +9,7 @@ function SearchScheduleUI(){
 
     const courseInput = (inputVal) => {
 
-        const inputValue = inputVal.replace(/ /g, "");
+        const inputValue = inputVal.replace(/ (?=\d)/g, "");
         setcourseSearch(inputValue)
     }
 

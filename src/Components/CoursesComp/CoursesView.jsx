@@ -43,7 +43,7 @@ const CoursesView = () => {
                         <a
                             key={letter}
                             href={`#${letter}`}
-                            className="crypto-link-nav text-black hover:font-bold px-1 m-1 font-semibold"
+                            className="crypto-link-nav text-black px-1 m-1 font-semibold"
                         >
                             {letter}
                         </a>

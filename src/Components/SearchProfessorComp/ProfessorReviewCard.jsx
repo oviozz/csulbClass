@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import {
     FaStar,
@@ -13,10 +14,11 @@ import {
     FaComments
 } from 'react-icons/fa';
 
-import "./ReviewCard.css"
-import ProfessorTags from "./ProfessorTags.jsx";
+import "./ProfessorReview.css"
+import ProfessorTags from "../ProfessorReviewComp/ProfessorTags.jsx";
 
-function ReviewCard({ professorData }) {
+function ProfessorReviewCard({ professorData }) {
+
     const { firstName, lastName, department, avgRating, avgDifficulty, numRatings, Comments } = professorData;
 
     const [selectedCourse, setSelectedCourse] = useState("All"); // Initialize with "All" as the default option
@@ -26,7 +28,7 @@ function ReviewCard({ professorData }) {
     const filteredComments = selectedCourse === "All" ? Comments : Comments.filter(comment => comment.Course === selectedCourse);
 
     return (
-        <div className="lg:p-3 p-2">
+        <div className="mt-3">
             <div className="">
                 <div className="bg-white px-3 py-4 text-gray-900 rounded-md shadow-lg border-black border-2">
                     <div className="flex justify-between items-start">
@@ -44,7 +46,7 @@ function ReviewCard({ professorData }) {
                                     <FaGraduationCap size={25} className=" inline-block mr-2 professor--review--label text-violet-500" />
                                     <p className="professor--review--label">
                                         <span className="professor--review--label">Department: </span>
-                                            <span className={"font-semibold px-2 rounded bg-violet-100 text-violet-500"}>{department}</span>
+                                        <span className={"font-semibold px-2 rounded bg-violet-100 text-violet-500"}>{department}</span>
                                     </p>
                                 </div>
 
@@ -153,19 +155,19 @@ function ReviewCard({ professorData }) {
                                 {comment.Course !== "N/A" && (
                                     <div className="mb-3 flex justify-between items-center">
 
-                                            <div className={"lg:flex block items-center gap-10"}>
+                                        <div className={"lg:flex block items-center gap-10"}>
 
-                                                <p className="lg:text-xl text-lg text-white">
-                                                    Course: <span className={"font-semibold"}>{comment.Course}</span>
-                                                </p>
+                                            <p className="lg:text-xl text-lg text-white">
+                                                Course: <span className={"font-semibold"}>{comment.Course}</span>
+                                            </p>
 
-                                                <ul className="lg:flex hidden gap-3">
+                                            <ul className="lg:flex hidden gap-3">
 
-                                                    <ProfessorTags commentTag={comment.Tags}/>
+                                                <ProfessorTags commentTag={comment.Tags}/>
 
-                                                </ul>
+                                            </ul>
 
-                                            </div>
+                                        </div>
 
                                         <p className="text-white text-md lg:text-lg">
                                             {comment.Date}
@@ -231,4 +233,4 @@ function ReviewCard({ professorData }) {
     );
 }
 
-export default ReviewCard;
+export default ProfessorReviewCard;

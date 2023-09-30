@@ -1,5 +1,5 @@
 
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     FaMapMarkerAlt,
     FaRegClock,
@@ -9,6 +9,9 @@ import {
     FaCheckCircle,
     FaTimesCircle, FaExclamationCircle, FaRegCopy, FaStar
 } from "react-icons/fa";
+
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 
 import { useNavigate } from "react-router-dom";
 
@@ -85,12 +88,14 @@ function SectionCard({ section }) {
     );
 }
 
-function ClassSchedulesCard({courseData}) {
+function ClassSchedulesCard({ courseData }) {
+    const { CourseName, CourseTitle, GEArea, Sections, Units } = courseData;
 
-    const {CourseName, CourseTitle, GEArea, Sections, Units} = courseData;
+    const [ShowClasses, setShowClasses] = useState(false);
+    const navigate = useNavigate();
 
     const numSections = Sections.length;
-    let numCols = 1
+    let numCols = 1;
     if (numSections === 2) {
         numCols = 2;
     } else if (numSections === 3) {
@@ -101,28 +106,56 @@ function ClassSchedulesCard({courseData}) {
         numCols = 3;
     }
 
+    const updateShowClasses = () => {
+        if (window.innerWidth <= 768) {
+            setShowClasses(true);
+        } else {
+            setShowClasses(false);
+        }
+    };
+
+    useEffect(() => {
+        updateShowClasses();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', updateShowClasses);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('resize', updateShowClasses);
+        };
+    }, []);
+
     return (
-        <div className={"pl-4 pr-4 pt-4 pb-1"}>
-            <div className="course-card rounded-md bg-white p-4 text-black shadow-lg border-2 border-black">
+        <div className="pl-4 pr-4 pt-4 pb-1">
+            <div className="course-card rounded-md bg-white p-4 text-black shadow-lg border-2 border-black hover:drop-shadow-md " onClick={() => setShowClasses((prev) => !prev)}>
                 <div className="flex items-center justify-between">
-                    <div className={"flex items-start flex-wrap justify-between w-full"}>
-                        <div className="mb-3">
+                    <div className="flex items-center flex-wrap justify-between w-full">
+                        <div className="">
                             <h2 className="text-xl font-bold">🖥️ {CourseName} - {CourseTitle}</h2>
-                            <h2 style={{fontSize: "1.1rem"}}>{GEArea}</h2>
+                            <h2 style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
                         </div>
-                        <span
-                            className="rounded-full bg-gray-800 px-2 py-1 text-sm font-semibold text-white"> {Units}
-                        </span>
+
+                        <div className="flex gap-1">
+                            <span className="rounded-full bg-gray-800 px-2 py-1 text-sm font-semibold text-white"> {Units}</span>
+
+                            <div className="lg:block md:block hidden ">
+                                {ShowClasses ? <KeyboardArrowDownRoundedIcon /> : <KeyboardArrowUpRoundedIcon />}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className={"lg:-mt-5"}>
-                    <h3 className="mb-2 mt-4 text-lg font-semibold text-black">Sections:</h3>
-                    <ul className={`grid grid-cols-1 sm:grid-cols-${numCols} lg:grid-cols-${numCols} gap-2`}>
-                        {Sections.map((section, index) => (
-                            <SectionCard key={index} section={section} />
-                        ))}
-                    </ul>
-                </div>
+
+                {ShowClasses && (
+                    <div className="">
+                        <h3 className="mb-2 mt-4 text-lg font-semibold text-black">Sections:</h3>
+                        <ul className={`grid grid-cols-1 sm:grid-cols-${numCols} lg:grid-cols-${numCols} gap-2`}>
+                            {Sections.map((section, index) => (
+                                <SectionCard key={index} section={section} />
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
         </div>
     );

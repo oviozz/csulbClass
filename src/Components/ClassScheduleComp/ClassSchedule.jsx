@@ -9,14 +9,17 @@ import {useParams} from "react-router-dom";
 
 function ClassSchedule(){
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     const { courseID } = useParams();
 
     const [classSchedule, setClassSchedule] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-
-    const courseCode = courseID.toUpperCase().replace(/ /g, 'z').replace(/\//g, 'x');
+    const courseCode = courseID.replace(/ /g, 'z');
 
     useEffect(() => {
         async function fetchData() {
@@ -45,7 +48,7 @@ function ClassSchedule(){
     }
 
     if (error) {
-        return <ErrorScreenUI titleVal={"Class"} backLink={`/course/${courseID}`} backSource={"homepage"}/>
+        return <ErrorScreenUI titleVal={"Class"} backLink={`/course`} backSource={"homepage"}/>
     }
 
     return (
@@ -54,7 +57,7 @@ function ClassSchedule(){
 
             <div className="ml-4 flex items-center gap-2 text-sm text-lime-700 bg-lime-100 rounded-md px-2 p-0.5 w-fit mt-0.5">
                 <InfoRoundedIcon sx={{ fontSize: "1rem" }} />
-                <span className="font-semibold">Click on the section to view more details.</span>
+                <span className="font-semibold">Click on the card to view class details.</span>
             </div>
 
             <ul>

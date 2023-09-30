@@ -103,9 +103,11 @@ function SearchScheduleCard({courseData}) {
                             <h2 className="lg:text-2xl text-xl font-bold">🖥️ {CourseName} - {CourseTitle}</h2>
                             <h2 style={{fontSize: "1.1rem"}}>{GEArea}</h2>
                         </div>
+
                         <span
                             className="rounded-full bg-gray-800 px-2 py-1 lg:text-md text-sm font-semibold text-white"> {Units}
                         </span>
+
                     </div>
                 </div>
                 <div className={"lg:-mt-5"}>
