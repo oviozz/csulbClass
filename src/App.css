@@ -5,7 +5,7 @@ body{
     font-family: 'Poppins', sans-serif;
     background-color: #FFC72A; /* Background color set to gold #FFC72A*/
     color: #000000; /* Text color set to black */
-    user-select: none;
+    /*user-select: none; */
 
 }
 

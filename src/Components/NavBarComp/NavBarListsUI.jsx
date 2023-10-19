@@ -88,13 +88,13 @@ export default function NavBarListsUI() {
                             '& > div': { justifyContent: 'flex-start' }, // Align text to the left
                         }}
                     >
-                        <Link to={"/course"}>
+                        <Link to={"/"}>
                             <ListItemButton onClick={handleCloseDrawer} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start', gap: "3px" }}>
                                 <FaRectangleList fontSize={21} /> Courses
                             </ListItemButton>
                         </Link>
 
-                        <Link to={"/"}>
+                        <Link to={"/search/course"}>
                             <ListItemButton onClick={handleCloseDrawer} style={{ fontWeight: 700, fontFamily: 'Poppins, sans-serif', justifyContent: 'flex-start' }}>
                                 <SearchRoundedIcon /> Find Classes
                             </ListItemButton>
@@ -127,13 +127,13 @@ export default function NavBarListsUI() {
             {!isMobile && (
                 <ul className={"flex gap-5"}>
 
-                    <Link to={"/course"}>
+                    <Link to={"/"}>
                         <li className={"navbar--links gap-1 flex items-center"}>
                             <FaRectangleList fontSize={21} /> Courses
                         </li>
                     </Link>
 
-                    <Link to={"/"}>
+                    <Link to={"/search/course"}>
                         <li className={"navbar--links flex items-center "}>
                             <SearchRoundedIcon /> Find Classes
                         </li>

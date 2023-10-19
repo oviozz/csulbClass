@@ -8,7 +8,7 @@ function ProfessorReviewUI() {
 
     const handleSearchInput = (inputVal) => {
         // Remove spaces before numbers in the input
-        const sanitizedInput = inputVal.replace(/ (?=\d)/g, "");
+        const sanitizedInput = inputVal.replace(/ (?=\d)/g, "").trim();
         setSearchQuery(sanitizedInput);
     };
 

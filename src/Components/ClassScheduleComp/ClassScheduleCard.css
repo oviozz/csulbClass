@@ -1,0 +1,11 @@
+
+@keyframes loadingAnimation {
+    0% { content: 'Loading.'; }
+    33% { content: 'Loading..'; }
+    66% { content: 'Loading...'; }
+}
+
+.loading-animation::before {
+    content: 'Loading.';
+    animation: loadingAnimation 1.5s infinite;
+}

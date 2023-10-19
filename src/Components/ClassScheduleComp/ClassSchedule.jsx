@@ -48,7 +48,7 @@ function ClassSchedule(){
     }
 
     if (error) {
-        return <ErrorScreenUI titleVal={"Class"} backLink={`/course`} backSource={"homepage"}/>
+        return <ErrorScreenUI titleVal={"Class"} backLink={`/`} backSource={"homepage"}/>
     }
 
     return (
@@ -57,13 +57,18 @@ function ClassSchedule(){
 
             <div className="ml-4 flex items-center gap-2 text-sm text-lime-700 bg-lime-100 rounded-md px-2 p-0.5 w-fit mt-0.5">
                 <InfoRoundedIcon sx={{ fontSize: "1rem" }} />
-                <span className="font-semibold">Click on the card to view class details.</span>
+                {
+                    (window.innerWidth <= 768) ?
+                        <span className="font-semibold">Click on the review to view ratings.</span>
+                        :
+                        <span className="font-semibold">Click on the card to view class sections.</span>
+                }
             </div>
 
             <ul>
                 {
                     classSchedule["Classes"].map((course) => (
-                        <ClassSchedulesCard key={course.CourseName} courseData={course}/>
+                        <ClassSchedulesCard key={course.CourseName} courseData={course} department={classSchedule.Department}/>
                     ))
                 }
             </ul>

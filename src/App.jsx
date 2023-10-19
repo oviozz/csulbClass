@@ -13,9 +13,9 @@ function App() {
     return (
         <NavBarLayout>
             <Routes>
-                <Route path={"/"} element={<SearchScheduleUI />}></Route>
+                <Route path={"/search/course"} element={<SearchScheduleUI />}></Route>
                 <Route path={"/course/:courseID"} element={<ClassSchedule />}></Route>
-                <Route path={"/course"} element={<CoursesView />}></Route>
+                <Route path={"/"} element={<CoursesView />}></Route>
                 <Route path={"/search/professor"} element={<ProfessorReviewUI />}></Route>
                 <Route path={"/professor/:profID"} element={<ProfessorReview />}></Route>
             </Routes>

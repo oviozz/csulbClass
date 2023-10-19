@@ -3,16 +3,20 @@ import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search.js";
 import {Button} from "@mui/joy";
 import {useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 
-function SearchInput({inputHandler}){
 
-    const [SearchInput, setSearchInput] = useState('');
+function SearchInput({inputHandler, pramsInput}){
+
+    const navigate = useNavigate();
+    const [SearchInput, setSearchInput] = useState(pramsInput || '');
 
     const searchHandler = (event) => {
         event.preventDefault();
-
         inputHandler(SearchInput)
+
+        navigate(`/search/course/?class=${encodeURIComponent(SearchInput)}`);
 
     }
 

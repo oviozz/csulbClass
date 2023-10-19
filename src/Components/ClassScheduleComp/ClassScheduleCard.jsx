@@ -14,10 +14,12 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 
 import { useNavigate } from "react-router-dom";
+import "./ClassScheduleCard.css"
 
-function SectionCard({ section }) {
+function SectionCard({ section, courseName}) {
 
     const [copied, setCopied] = useState(false);
+    const [rating, setRating] = useState('');
     const navigate = useNavigate();
 
 
@@ -41,6 +43,18 @@ function SectionCard({ section }) {
         seatText = "WaitList"
     }
 
+
+    let Ratingcolor;
+    if (rating === "None") {
+        Ratingcolor = "text-orange-500";
+    } else if (rating >= 4) {
+        Ratingcolor = "text-green-500";
+    } else if (rating >= 3) {
+        Ratingcolor = "text-yellow-500";
+    } else {
+        Ratingcolor = "text-red-500";
+    }
+
     const handleSectionNumClick = () => {
         navigator.clipboard.writeText(SectionNum).then(() => {
             setCopied(true);
@@ -52,8 +66,29 @@ function SectionCard({ section }) {
     };
 
     const professorReviewHandler = (professorID) => {
-        navigate(`/professor/${professorID}`)
+        const encodedCourseName = btoa(courseName); // Encode courseName
+
+        navigate(`/professor/${professorID}?department=${encodedCourseName}`)
     }
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`https://csulbapi.vercel.app/professor/search/${Instructor}?department=${courseName}`);
+                const data = await response.json();
+
+                if (!data.error) {
+                    setRating(data["avgRating"]);
+                } else {
+                    setRating('None');
+                }
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+        fetchData();
+    }, [Instructor, courseName]);
 
 
     return (
@@ -63,12 +98,24 @@ function SectionCard({ section }) {
                 <h1>Section: <span className={"font-semibold"}>{SectionNum}</span></h1>
                 {
                     copied ? <span className="text-white ml-2">Copied!</span>
-                :
-                    <span className="text-gray-100" onClick={handleSectionNumClick} ><FaRegCopy /></span>
+                        :
+                        <span className="text-gray-100" onClick={handleSectionNumClick} ><FaRegCopy /></span>
                 }
             </div>
 
             <ul className={"ml-1"}>
+                <li className={"flex items-center gap-2"}><FaStar /> Rating:
+                    {
+                        rating === "None" ?
+                            <span className={`px-0.5 rounded-sm font-semibold ${Ratingcolor}`}>None</span>
+                            :
+                            rating === ''?
+                                <span className="px-0.5 text-gray-400 loading-animation animate-pulse"></span>
+                                :
+                                <span className={`px-0.5 rounded-sm font-semibold ${Ratingcolor}`}>{rating}/5</span>
+                    }
+
+                </li>
                 <li className={"flex items-center gap-2"}><FaMapMarkerAlt /> Location: {Location}</li>
                 <li className={"flex items-center gap-2"}><FaRegClock /> Day/Time: {Day} {Time}</li>
                 <li className={"flex items-center gap-2"}><FaChalkboardTeacher /> Instructor: {Instructor}</li>
@@ -88,11 +135,13 @@ function SectionCard({ section }) {
     );
 }
 
-function ClassSchedulesCard({ courseData }) {
+function ClassSchedulesCard({ courseData, department }) {
+
     const { CourseName, CourseTitle, GEArea, Sections, Units } = courseData;
 
     const [ShowClasses, setShowClasses] = useState(false);
     const navigate = useNavigate();
+    const [sections, setSections] = useState([]);
 
     const numSections = Sections.length;
     let numCols = 1;
@@ -106,38 +155,19 @@ function ClassSchedulesCard({ courseData }) {
         numCols = 3;
     }
 
-    const updateShowClasses = () => {
-        if (window.innerWidth <= 768) {
-            setShowClasses(true);
-        } else {
-            setShowClasses(false);
-        }
-    };
-
-    useEffect(() => {
-        updateShowClasses();
-
-        // Add event listener for window resize
-        window.addEventListener('resize', updateShowClasses);
-
-        // Clean up the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('resize', updateShowClasses);
-        };
-    }, []);
-
     return (
         <div className="pl-4 pr-4 pt-4 pb-1">
-            <div className="course-card rounded-md bg-white p-4 text-black shadow-lg border-2 border-black hover:drop-shadow-md " onClick={() => setShowClasses((prev) => !prev)}>
+            <div className="course-card rounded-md bg-white p-4 text-black shadow-lg border-2 border-black hover:drop-shadow-md" onClick={() => setShowClasses((prev) => !prev)}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center flex-wrap justify-between w-full">
                         <div className="">
                             <h2 className="text-xl font-bold">🖥️ {CourseName} - {CourseTitle}</h2>
-                            <h2 style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
+                            <h2 className={"lg:hidden md:hidden block"} style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
+
                         </div>
 
                         <div className="flex gap-1">
-                            <span className="rounded-full bg-gray-800 px-2 py-1 text-sm font-semibold text-white"> {Units}</span>
+                            <span className="rounded-full bg-gray-800 px-2 py-1 text-sm font-semibold text-white mt-2 lg:mt-0"> {Units}</span>
 
                             <div className="lg:block md:block hidden ">
                                 {ShowClasses ? <KeyboardArrowDownRoundedIcon /> : <KeyboardArrowUpRoundedIcon />}
@@ -146,12 +176,15 @@ function ClassSchedulesCard({ courseData }) {
                     </div>
                 </div>
 
-                {ShowClasses && (
-                    <div className="">
+                {(ShowClasses || (window.innerWidth <= 768)) && (
+                    <div className="" onClick={(e) => e.stopPropagation()}>
+                        <h2 className={"lg:block hidden"} style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
+
                         <h3 className="mb-2 mt-4 text-lg font-semibold text-black">Sections:</h3>
+
                         <ul className={`grid grid-cols-1 sm:grid-cols-${numCols} lg:grid-cols-${numCols} gap-2`}>
                             {Sections.map((section, index) => (
-                                <SectionCard key={index} section={section} />
+                                <SectionCard key={index} section={section} courseName={department}/>
                             ))}
                         </ul>
                     </div>
