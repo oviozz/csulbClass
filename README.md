@@ -1,5 +1,5 @@
 # csulbClass
-https://csulbclass.vercel.app/
+Live Demo: https://csulbclass.vercel.app/
 
 
 ![image](https://github.com/oviozz/csulbClass/assets/42685801/2e6bc954-450a-4c5b-82df-b829069ef055)
