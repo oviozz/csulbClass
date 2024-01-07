@@ -55,7 +55,7 @@ function ReviewCard({ professorData }) {
 
                                         {
                                             avgRating !== "N/A" ? (
-                                                <span className={`font-semibold px-2 rounded ${avgRating > 4 ? 'text-green-500 bg-green-100' : 'text-red-500 bg-red-100'}`}>
+                                                <span className={`font-semibold px-2 rounded ${avgRating >= 4 ? 'text-green-500 bg-green-100' : 'text-red-500 bg-red-100'}`}>
                                                     {avgRating.toFixed(2)} / 5
                                                 </span>
                                             ) : (

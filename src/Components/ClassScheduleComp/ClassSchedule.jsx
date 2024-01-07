@@ -57,12 +57,7 @@ function ClassSchedule(){
 
             <div className="ml-4 flex items-center gap-2 text-sm text-lime-700 bg-lime-100 rounded-md px-2 p-0.5 w-fit mt-0.5">
                 <InfoRoundedIcon sx={{ fontSize: "1rem" }} />
-                {
-                    (window.innerWidth <= 768) ?
-                        <span className="font-semibold">Click on the review to view ratings.</span>
-                        :
-                        <span className="font-semibold">Click on the card to view class sections.</span>
-                }
+                <span className="font-semibold">Click on the card to view class sections.</span>
             </div>
 
             <ul>

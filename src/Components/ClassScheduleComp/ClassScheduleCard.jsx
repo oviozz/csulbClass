@@ -45,7 +45,10 @@ function SectionCard({ section, courseName}) {
 
 
     let Ratingcolor;
-    if (rating === "None") {
+
+    if (Instructor === 'Staff'){
+        Ratingcolor = "text-gray-500"
+    } else if (rating === "None") {
         Ratingcolor = "text-orange-500";
     } else if (rating >= 4) {
         Ratingcolor = "text-green-500";
@@ -54,6 +57,9 @@ function SectionCard({ section, courseName}) {
     } else {
         Ratingcolor = "text-red-500";
     }
+
+    const isStaff = Instructor === 'Staff';
+
 
     const handleSectionNumClick = () => {
         navigator.clipboard.writeText(SectionNum).then(() => {
@@ -66,9 +72,11 @@ function SectionCard({ section, courseName}) {
     };
 
     const professorReviewHandler = (professorID) => {
+
         const encodedCourseName = btoa(courseName); // Encode courseName
 
         navigate(`/professor/${professorID}?department=${encodedCourseName}`)
+
     }
 
     useEffect(() => {
@@ -112,7 +120,19 @@ function SectionCard({ section, courseName}) {
                             rating === ''?
                                 <span className="px-0.5 text-gray-400 loading-animation animate-pulse"></span>
                                 :
-                                <span className={`px-0.5 rounded-sm font-semibold ${Ratingcolor}`}>{rating}/5</span>
+                                <span className={`px-0.5 rounded-sm font-semibold ${Ratingcolor}`}>
+                                    {
+                                        Instructor !== 'Staff' ?
+                                            (
+                                                `${rating}/5`
+                                            )
+                                        :
+                                            (
+
+                                                'None'
+                                            )
+                                    }
+                                </span>
                     }
 
                 </li>
@@ -126,8 +146,10 @@ function SectionCard({ section, courseName}) {
                         {icon} Seats: {seatText}
                     </li>
 
-                    <button className={'bg-blue-700 text-white font-semibold rounded-md text-sm p-1 px-2'} onClick={() => professorReviewHandler(Instructor)}>
-                        Review
+                    <button className={`${isStaff ? 'bg-gray-500' : 'bg-blue-700'} text-white font-semibold rounded-md text-sm p-1 px-2`} onClick={() => {!isStaff && professorReviewHandler(Instructor)}}>
+                        {
+                            isStaff ? 'No Review' : 'Review'
+                        }
                     </button>
                 </div>
             </ul>
@@ -176,7 +198,7 @@ function ClassSchedulesCard({ courseData, department }) {
                     </div>
                 </div>
 
-                {(ShowClasses || (window.innerWidth <= 768)) && (
+                {(ShowClasses) && (
                     <div className="" onClick={(e) => e.stopPropagation()}>
                         <h2 className={"lg:block hidden"} style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
 

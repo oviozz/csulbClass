@@ -18,7 +18,6 @@ const CoursesView = () => {
         setIsGridView((prevMode) => !prevMode);
     };
 
-
     return (
         <div>
             <div className="p-4">
