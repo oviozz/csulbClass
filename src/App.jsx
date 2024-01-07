@@ -8,7 +8,7 @@ import ProfessorReview from "./Components/ProfessorReviewComp/ProfessorReview.js
 import SearchScheduleUI from "./Components/SearchClassComp/SearchScheduleUI.jsx";
 import ProfessorReviewUI from "./Components/SearchProfessorComp/ProfessorReviewUI.jsx";
 import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 
 function App() {
