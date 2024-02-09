@@ -23,7 +23,7 @@ const CoursesView = () => {
             <div className="p-4">
                 <div className="flex justify-between mb-1">
                         <div className={"lg:flex items-center gap-1"}>
-                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-900 ">👩🏻‍🏫 Fall 2023 Schedule</h1>
+                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-900 ">👩🏻‍🏫 Fall 2024 Schedule</h1>
                         </div>
                     <button onClick={toggleView} className="text-black hover:text-gray-800 hidden sm:block" >
                         {isGridView ? (

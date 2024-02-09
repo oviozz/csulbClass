@@ -198,7 +198,7 @@ function ClassSchedulesCard({ courseData, department }) {
                     </div>
                 </div>
 
-                {(ShowClasses) && (
+                {(ShowClasses) ? (
                     <div className="" onClick={(e) => e.stopPropagation()}>
                         <h2 className={"lg:block hidden"} style={{ fontSize: '1.1rem' }}>{GEArea}</h2>
 
@@ -210,7 +210,7 @@ function ClassSchedulesCard({ courseData, department }) {
                             ))}
                         </ul>
                     </div>
-                )}
+                ) : null }
             </div>
         </div>
     );
