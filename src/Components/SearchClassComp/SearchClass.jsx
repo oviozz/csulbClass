@@ -6,10 +6,12 @@ import SearchScheduleUI from "./SearchScheduleUI.jsx";
 import SearchScheduleCard from "./SearchScheduleCard.jsx";
 import {Link} from "react-router-dom";
 import {CircularProgress} from "@mui/joy";
+import useCourseYear from "../../lib/providers/courses-year.js";
 
 
 function SearchClass({userInput}){
 
+    const { season, year } = useCourseYear();
     const [SearchClass, setSearchClass] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -21,7 +23,7 @@ function SearchClass({userInput}){
             setLoading(true)
 
             try {
-                const response = await fetch(`https://csulbapi.vercel.app/search/${userInput}`);
+                const response = await fetch(`https://csulbapi.vercel.app/search/${userInput}?season_year=${season}_${year}`);
                 const data = await response.json();
 
                 if (data.error) {
@@ -39,7 +41,7 @@ function SearchClass({userInput}){
         }
 
         fetchData();
-    }, [userInput]);
+    }, [userInput, season, year]);
 
 
     if (loading) {

@@ -14,6 +14,7 @@ import { FaRectangleList, FaMoon, FaSun, FaAddressCard } from "react-icons/fa6";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { Link } from 'react-router-dom'
+import YearSeasonDropdown from "./YearSeasonDropdown.jsx";
 
 
 export default function NavBarListsUI() {
@@ -122,6 +123,10 @@ export default function NavBarListsUI() {
                             }
                         </li>
                     </List>
+
+                    <div className={"mt-auto p-5"}>
+                        <YearSeasonDropdown />
+                    </div>
                 </Drawer>
             )}
             {!isMobile && (

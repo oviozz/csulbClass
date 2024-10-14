@@ -2,40 +2,41 @@
 import React, { useState } from 'react';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ListRoundedIcon from '@mui/icons-material/ListRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import { IoIosArrowUp } from "react-icons/io";
 import "./CoursesView.css"
 import CourseCard from "./CourseCard.jsx";
 import {CourseListData} from "../../Datas/CourseListData.jsx";
-import {useNavigate} from "react-router-dom";
+import useCourseYear from "../../lib/providers/courses-year.js";
 
 const CoursesView = () => {
 
-
+    const { season, year } = useCourseYear();
     const [isGridView, setIsGridView] = useState(true);
 
     const toggleView = () => {
         setIsGridView((prevMode) => !prevMode);
     };
 
+    const semester_name = season?.replace("_", " ")
+
     return (
         <div>
             <div className="p-4">
                 <div className="flex justify-between mb-1">
                         <div className={"lg:flex items-center gap-1"}>
-                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-900 ">👩🏻‍🏫 Fall 2024 Schedule</h1>
+                            <h1 className="text-3xl font-bold flex gap-2 items-center text-gray-900 ">👩🏻‍🏫 {semester_name} {year} Schedule</h1>
                         </div>
-                    <button onClick={toggleView} className="text-black hover:text-gray-800 hidden sm:block" >
-                        {isGridView ? (
-                            <h1 className={"text-gray-800 bg-white border-gray-800 border-2 px-3 py-1 rounded-md flex items-center gap-1"}>
-                                <ListRoundedIcon fontSize={"small"}/> List View
-                            </h1>
-                        ) : (
-                            <h1 className={"text-gray-800 bg-white border-gray-800 border-2 px-3 py-1 rounded-md flex items-center gap-1 "}>
-                                <GridViewRoundedIcon fontSize={"small"} /> Grid View
-                            </h1>
-                        )}
-                    </button>
+                        <button onClick={toggleView} className="text-black hover:text-gray-800 hidden sm:block" >
+                            {isGridView ? (
+                                <h1 className={"text-gray-800 bg-white border-gray-800 border-2 px-3 py-1 rounded-md flex items-center gap-1"}>
+                                    <ListRoundedIcon fontSize={"small"}/> List View
+                                </h1>
+                            ) : (
+                                <h1 className={"text-gray-800 bg-white border-gray-800 border-2 px-3 py-1 rounded-md flex items-center gap-1 "}>
+                                    <GridViewRoundedIcon fontSize={"small"} /> Grid View
+                                </h1>
+                            )}
+                        </button>
                 </div>
                 <div className="flex flex-wrap justify-center mt-2">
                     {Object.keys(CourseListData).map((letter) => (
@@ -76,3 +77,4 @@ const CoursesView = () => {
 };
 
 export default CoursesView;
+

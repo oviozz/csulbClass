@@ -17,10 +17,12 @@
     "@mui/material": "^5.14.9",
     "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.2",
+    "lucide-react": "^0.452.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

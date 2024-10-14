@@ -1,55 +1,57 @@
 
 import ClassSchedulesCard from "./ClassScheduleCard.jsx";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
-import {FetchClassSchedule} from "../../FetchData/FetchClassSchedule.jsx";
 import LoadingScreenUI from "../LoadingComp/LoadingScreenUI.jsx";
 import ErrorScreenUI from "../ErrorComp/ErrorScreenUI.jsx";
 import {useParams} from "react-router-dom";
+import useCourseYear from "../../lib/providers/courses-year.js";
 
 function ClassSchedule(){
 
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
-
     const { courseID } = useParams();
-
+    const { season, year } = useCourseYear();
     const [classSchedule, setClassSchedule] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
     const courseCode = courseID.replace(/ /g, 'z');
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(`https://csulbapi.vercel.app/courses/${courseCode}`);
-                const data = await response.json();
-
-                if (data.error) {
-                    setError(true);
-                } else {
-                    setClassSchedule(data);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        setError(false);
+        try {
+            const response = await fetch(`https://csulbapi.vercel.app/courses/${courseCode}?season_year=${season}_${year}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            const data = await response.json();
+            if (data.error) {
+                setError(true);
+            } else {
+                setClassSchedule(data);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setError(true);
+        } finally {
+            setLoading(false);
         }
+    }, [courseCode, season, year]);
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         fetchData();
-    }, []);
-
+    }, [fetchData]);
 
     if (loading) {
         return <LoadingScreenUI titleVal={"Class"}/>;
     }
 
     if (error) {
-        return <ErrorScreenUI titleVal={"Class"} backLink={`/`} backSource={"homepage"}/>
+        return <ErrorScreenUI titleVal={"Class"} backLink={"/"} backSource={"homepage"}/>;
     }
+
 
     return (
         <>
